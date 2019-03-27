@@ -17,6 +17,11 @@ class OkHttpClientModule {
             .newBuilder()
             .addInterceptor { chain ->
                 val original = chain.request()
+                chain.proceed(original.newBuilder()
+                    .addHeader("Accept", "application/json")
+                    .addHeader("Content-Type", "application/json")
+                    .build())
+
                 val originalHttpUrl = original.url()
 
                 val url = originalHttpUrl.newBuilder()
@@ -27,6 +32,7 @@ class OkHttpClientModule {
 
                 val request = requestBuilder.build()
                 chain.proceed(request)
+
             }
             .addInterceptor(httpLoggingInterceptor)
             .build()

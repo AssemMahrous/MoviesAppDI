@@ -1,6 +1,7 @@
 package com.example.moviesappdi.modules
 
 import com.example.moviesappdi.network.MoviesApi
+import com.example.moviesappdi.utils.Constants
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -26,9 +27,10 @@ class ApiModule {
     ): Retrofit {
         return Retrofit.Builder()
             .client(okHttpClient)
-            .baseUrl("https://randomuser.me/")
+            .baseUrl(Constants.BASE_URL)
             .addConverterFactory(gsonConverterFactory)
             .addCallAdapterFactory(rxJava2CallAdapterFactory)
+            .addCallAdapterFactory(LiveDataCallAdapterFactory())
             .build()
     }
 
